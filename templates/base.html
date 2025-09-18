@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rekomendasi Investasi Saham{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon -->
+    <link rel="icon" href="https://img.icons8.com/ios-filled/50/4a90e2/stocks.png">
+
+    <style>
+
+        .sidebar {
+            width: 220px;
+            background-color: #1d3557;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar h2 {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            display: block;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: #457b9d;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5em;
+                margin: 10px;
+                cursor: pointer;
+                color: #1d3557;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        /* === Warna Utama Baru === */
+        :root {
+        --primary-color: #1e88e5;
+        --primary-hover: #1565c0;
+        --accent-color: #e3f2fd;
+        --text-color: #333;
+        }
+
+        /* === Body & Font === */
+        body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        }
+
+        /* === Navbar Branding === */
+        .navbar-brand {
+        font-weight: bold;
+        font-size: 1.5em;
+        color: var(--primary-color);
+        }
+
+        /* === Tombol Modern === */
+        .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        background-color: var(--primary-color);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn:active {
+        transform: scale(0.95);
+        }
+
+        /* === Card Upgrade === */
+        .stock-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 16px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .stock-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        /* === Sidebar Hover === */
+        .sidebar a:hover {
+        background-color: var(--accent-color);
+        border-radius: 8px;
+        }
+
+    </style>
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>📈 Rekomendasi Investasi Saham</h2>
+        <a href="{{ url_for('home') }}">🏠 Home</a>
+        <a href="{{ url_for('analysis') }}">📈 Analisis</a>
+        <a href="{{ url_for('recommendation') }}">📊 Rekomendasi</a>
+        <a href="{{ url_for('output') }}">📄 Output</a>
+        <a href="{{ url_for('about') }}">ℹ️ About</a>
+
+        <!-- 🔥 Dinamis -->
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('setting') }}">⚙️ Setting</a>
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">🔐 Login</a>
+            <a href="{{ url_for('register') }}">📝 Register</a>
+        {% endif %}
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Sidebar Toggle Script -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
