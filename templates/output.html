@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="output-container">
+    <h1>📄 Output Proses Analisis</h1>
+
+    <!-- Tombol Aksi -->
+    <div style="margin-bottom: 20px; text-align: center;">
+        <button class="btn" onclick="copyOutput()">📋 Salin Output</button>
+        <button class="btn" onclick="downloadPDF()">⬇️ Unduh PDF</button>
+    </div>
+
+    <!-- Isi Output -->
+    <div class="output-content" id="output-log">
+        <pre>{{ output }}</pre>
+    </div>
+
+    <!-- Back -->
+    <a href="{{ url_for('recommendation') }}" class="btn" style="margin-top: 20px;">⬅️ Kembali ke Rekomendasi</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+    .output-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .output-content {
+        white-space: pre-wrap;
+        background: #f8f8f8;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow-x: auto;
+        max-height: 500px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: white;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<script>
+    function copyOutput() {
+        const text = document.querySelector('#output-log pre').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert('✅ Output berhasil disalin!');
+        });
+    }
+
+    function downloadPDF() {
+        const text = document.querySelector('#output-log pre').innerText;
+        const blob = new Blob([text], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'hasil_analisis.pdf';
+        link.click();
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Judul
+        doc.setFontSize(18);
+        doc.text("📊 Laporan Hasil Analisis Saham", 14, 20);
+
+        // Profil Risiko
+        doc.setFontSize(12);
+        doc.setTextColor(100);
+        doc.text("Profil Risiko: Balanced", 14, 30);
+
+        // Output Log
+        const text = document.querySelector('#output-log pre').innerText;
+        const lines = doc.splitTextToSize(text, 180);
+        doc.text(lines, 14, 40);
+
+        doc.save('hasil_analisis.pdf');
+    }
+</script>
+
+{% endblock %}
