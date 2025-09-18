@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Beranda Investasi Saham{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div class="overlay"></div>
+    <div class="home-content">
+        <h1>🚀 Selamat Datang!</h1>
+        <p>Tingkatkan keputusan <strong>investasi saham</strong> dengan <span class="highlight">analisis TOPSIS</span> yang terbukti efektif dan berbasis data historis.</p>
+        <div class="button-container">
+          <a href="{{ url_for('analysis') }}" class="get-started-btn">🔎 Mulai Analisis</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Background dengan overlay */
+.home-container {
+  position: relative;
+  height: 100vh;
+  background: url('/static/images/Saham.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.home-content h1 {
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.home-content p {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  color: #eee;
+}
+
+.highlight {
+  background: linear-gradient(to right, #4CAF50, #81C784);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+/* Tombol */
+.get-started-btn {
+  font-size: 18px;
+  background: linear-gradient(45deg, #4CAF50, #66BB6A);
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.get-started-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(45deg, #388E3C, #66BB6A);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-content h1 {
+    font-size: 2.4rem;
+  }
+  .home-content p {
+    font-size: 1rem;
+  }
+}
+
+/* Animasi */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}
