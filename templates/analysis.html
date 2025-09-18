@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Analisis Saham{% endblock %}
+
+{% block content %}
+<h1>📊 Lakukan Analisis Saham</h1>
+
+<form method="POST" class="form-container">
+
+  <label for="tickers">🆔 Tickers (pisahkan dengan koma):</label>
+  <input type="text" id="tickers" name="tickers" placeholder="Contoh: AAPL, MSFT, GOOGL" required>
+
+  <label for="start_date">📅 Tanggal Mulai:</label>
+  <input type="date" id="start_date" name="start_date" min="{{ min_date }}" max="{{ max_date }}" required>
+
+  <label for="end_date">📅 Tanggal Akhir:</label>
+  <input type="date" id="end_date" name="end_date" min="{{ min_date }}" max="{{ max_date }}" required>
+
+  <label for="risk_profile">⚖️ Pilih Profil Risiko:</label>
+  <select id="risk_profile" name="risk_profile" required>
+    <option value="Balanced" selected>Balanced (Seimbang)</option>
+    <option value="High Risk High Reward">High Risk High Reward</option>
+    <option value="Low Risk Low Reward">Low Risk Low Reward</option>
+  </select>
+
+  <button type="submit" class="btn-analyze">🔎 Mulai Analisis</button>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<style>
+.form-container {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+label {
+  font-weight: 600;
+  color: #333;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+input:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-analyze {
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-analyze:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 15px;
+  }
+
+  input, select {
+    font-size: 0.95rem;
+  }
+
+  .btn-analyze {
+    font-size: 1rem;
+  }
+}
+</style>
+{% endblock %}
