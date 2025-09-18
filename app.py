@@ -1,4 +1,3 @@
-# Impor library yang diperlukan
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from database import mysql, User, UserLog
@@ -15,13 +14,18 @@ import random
 import json
 from alpha_vantage.timeseries import TimeSeries
 from io import StringIO
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'stock_investment'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
 mysql.init_app(app)
 login_manager = LoginManager()
@@ -138,7 +142,7 @@ def logout():
 # Konfigurasi logging
 logging.basicConfig(level=logging.DEBUG)
 
-ALPHA_VANTAGE_API_KEY = 'L2LPWH7JB32MG1TY'
+ALPHA_VANTAGE_API_KEY = os.getenv('ALPHA_VANTAGE_API_KEY')
 
 def collect_data(tickers_list, start_date, end_date):
     logging.debug(f"Mulai pengumpulan data Alpha Vantage untuk tickers: {tickers_list}, tanggal {start_date} sampai {end_date}")
